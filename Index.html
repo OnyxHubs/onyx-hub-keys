@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONYX HUB - Get Key</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #06060e;
+            color: #f5f5ff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: 
+                linear-gradient(rgba(88,101,242,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(88,101,242,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+        }
+        
+        .glow-orb {
+            position: fixed;
+            width: 400px; height: 400px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            z-index: 0;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .glow-orb-1 {
+            background: #5865f2;
+            top: -100px; left: -100px;
+        }
+        
+        .glow-orb-2 {
+            background: #57f287;
+            bottom: -100px; right: -100px;
+            animation-delay: -4s;
+        }
+        
+        .glow-orb-3 {
+            background: #fee75c;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px; height: 300px;
+            opacity: 0.08;
+            animation-delay: -2s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(30px, -30px); }
+            50% { transform: translate(-20px, 20px); }
+            75% { transform: translate(20px, 30px); }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .logo-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .diamond-logo {
+            width: 70px; height: 70px;
+            background: linear-gradient(135deg, #5865f2, #727fff);
+            transform: rotate(45deg);
+            border-radius: 14px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 40px rgba(88,101,242,0.4);
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 40px rgba(88,101,242,0.4); }
+            50% { box-shadow: 0 0 60px rgba(88,101,242,0.6); }
+        }
+        
+        .diamond-logo span {
+            transform: rotate(-45deg);
+            font-size: 28px;
+            font-weight: 900;
+            color: white;
+        }
+        
+        .logo-title {
+            font-size: 42px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #727fff, #f5f5ff, #5865f2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .logo-subtitle {
+            color: #5865f2;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        
+        .steps-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+        
+        .step-card {
+            background: rgba(18,18,32,0.8);
+            border: 1px solid rgba(88,101,242,0.15);
+            border-radius: 14px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .step-card:hover {
+            border-color: rgba(88,101,242,0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(88,101,242,0.1);
+        }
+        
+        .step-card.completed {
+            border-color: rgba(87,242,135,0.4);
+            background: rgba(87,242,135,0.05);
+        }
+        
+        .step-number {
+            width: 40px; height: 40px;
+            background: linear-gradient(135deg, #5865f2, #727fff);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        
+        .step-card.completed .step-number {
+            background: linear-gradient(135deg, #57f287, #2ecc71);
+        }
+        
+        .step-content {
+            flex: 1;
+        }
+        
+        .step-title {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+        
+        .step-desc {
+            color: #949baa;
+            font-size: 12px;
+        }
+        
+        .step-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: white;
+            display: inline-block;
+        }
+        
+        .btn-discord {
+            background: linear-gradient(135deg, #5865f2, #4752c4);
+        }
+        
+        .btn-discord:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(88,101,242,0.4);
+        }
+        
+        .btn-youtube {
+            background: linear-gradient(135deg, #ff0000, #cc0000);
+        }
+        
+        .btn-youtube:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(255,0,0,0.4);
+        }
+        
+        .btn-check {
+            background: rgba(88,101,242,0.2);
+            border: 1px solid rgba(88,101,242,0.3);
+            color: #727fff;
+            padding: 8px 16px;
+            font-size: 11px;
+        }
+        
+        .btn-check:hover {
+            background: rgba(88,101,242,0.3);
+        }
+        
+        .key-section {
+            background: rgba(18,18,32,0.9);
+            border: 1px solid rgba(88,101,242,0.2);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .key-section.unlocked {
+            border-color: rgba(87,242,135,0.4);
+            box-shadow: 0 0 40px rgba(87,242,135,0.1);
+        }
+        
+        .key-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        
+        .key-desc {
+            color: #949baa;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        
+        .key-display {
+            background: rgba(6,6,14,0.8);
+            border: 2px solid rgba(88,101,242,0.3);
+            border-radius: 10px;
+            padding: 16px 24px;
+            font-family: 'Courier New', monospace;
+            font-size: 18px;
+            font-weight: 700;
+            color: #57f287;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+            user-select: all;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .key-display:hover {
+            border-color: #57f287;
+            box-shadow: 0 0 20px rgba(87,242,135,0.2);
+        }
+        
+        .key-display.hidden {
+            color: #585e6c;
+            letter-spacing: 4px;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #57f287, #2ecc71);
+            border: none;
+            border-radius: 8px;
+            padding: 12px 30px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #06060e;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 25px rgba(87,242,135,0.4);
+        }
+        
+        .copy-btn:disabled {
+            background: rgba(88,101,242,0.2);
+            color: #585e6c;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .timer {
+            color: #fee75c;
+            font-size: 13px;
+            margin-top: 12px;
+            font-weight: 600;
+        }
+        
+        .key-info {
+            margin-top: 12px;
+            color: #949baa;
+            font-size: 11px;
+        }
+        
+        .checkmark {
+            color: #57f287;
+            font-size: 18px;
+        }
+        
+        .locked-overlay {
+            position: relative;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(88,101,242,0.1);
+            border-radius: 3px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #5865f2, #57f287);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            color: #949baa;
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #585e6c;
+            font-size: 11px;
+        }
+
+        .warning-box {
+            background: rgba(254,231,92,0.05);
+            border: 1px solid rgba(254,231,92,0.2);
+            border-radius: 10px;
+            padding: 14px 18px;
+            margin-top: 16px;
+            font-size: 12px;
+            color: #fee75c;
+        }
+
+        @media (max-width: 600px) {
+            .logo-title { font-size: 28px; }
+            .step-card { flex-direction: column; text-align: center; }
+            .key-display { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+    
+    <div class="container">
+        <div class="logo-section">
+            <div class="diamond-logo"><span>O</span></div>
+            <h1 class="logo-title">ONYX HUB</h1>
+            <p class="logo-subtitle">Premium Key System</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+        <p class="progress-text" id="progressText">Wykonaj kroki poniżej aby otrzymać klucz (0/4)</p>
+
+        <div class="steps-container">
+            <!-- Step 1: Discord 1 -->
+            <div class="step-card" id="step1">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">💬 Dołącz na Discord #1</div>
+                    <div class="step-desc">Dołącz na główny serwer Discord i zostań na nim</div>
+                </div>
+                <a href="https://discord.gg/6x2WvQ4zwD" target="_blank" class="step-btn btn-discord" onclick="completeStep(1)">Dołącz</a>
+            </div>
+
+            <!-- Step 2: Discord 2 -->
+            <div class="step-card" id="step2">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">💬 Dołącz na Discord #2</div>
+                    <div class="step-desc">Dołącz na drugi serwer Discord</div>
+                </div>
+                <a href="https://discord.gg/yrvyj4e5cg" target="_blank" class="step-btn btn-discord" onclick="completeStep(2)">Dołącz</a>
+            </div>
+
+            <!-- Step 3: YouTube 1 -->
+            <div class="step-card" id="step3">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">🔴 Subskrybuj KitsuneeO_OG</div>
+                    <div class="step-desc">Zasubskrybuj kanał na YouTube</div>
+                </div>
+                <a href="https://www.youtube.com/@KitsuneeO_OG" target="_blank" class="step-btn btn-youtube" onclick="completeStep(3)">Subskrybuj</a>
+            </div>
+
+            <!-- Step 4: YouTube 2 -->
+            <div class="step-card" id="step4">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <div class="step-title">🔴 Subskrybuj ventreeexx</div>
+                    <div class="step-desc">Zasubskrybuj drugi kanał na YouTube</div>
+                </div>
+                <a href="https://www.youtube.com/@ventreeexx" target="_blank" class="step-btn btn-youtube" onclick="completeStep(4)">Subskrybuj</a>
+            </div>
+        </div>
+
+        <!-- Key Section -->
+        <div class="key-section" id="keySection">
+            <div class="key-title" id="keyTitle">🔒 Klucz zablokowany</div>
+            <div class="key-desc" id="keyDesc">Wykonaj wszystkie 4 kroki powyżej aby odblokować klucz</div>
+            
+            <div class="key-display hidden" id="keyDisplay">••••••••••••••••••</div>
+            
+            <button class="copy-btn" id="copyBtn" disabled onclick="copyKey()">Skopiuj Klucz</button>
+            
+            <div class="timer" id="timerText" style="display:none"></div>
+            
+            <div class="key-info" id="keyInfo">
+                Klucz ważny: <strong>1 dzień</strong> od momentu wygenerowania
+            </div>
+
+            <div class="warning-box">
+                ⚠️ Klucz jest jednorazowy! Po użyciu zostanie automatycznie usunięty z bazy danych.
+                Każdy klucz jest przypisany do Twojego urządzenia.
+            </div>
+        </div>
+
+        <div class="footer">
+            ONYX HUB © 2025 • Premium Key System v3.1<br>
+            Nie udostępniaj swoich kluczy innym osobom
+        </div>
+    </div>
+
+    <script>
+        let completedSteps = new Set();
+        let generatedKey = null;
+        let waitTimer = null;
+        let waitSeconds = 15;
+
+        // Load saved progress
+        const saved = localStorage.getItem('onyx_steps');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                parsed.forEach(s => {
+                    completedSteps.add(s);
+                    markStepComplete(s);
+                });
+                updateProgress();
+            } catch(e) {}
+        }
+
+        function completeStep(step) {
+            completedSteps.add(step);
+            localStorage.setItem('onyx_steps', JSON.stringify([...completedSteps]));
+            
+            // Delay marking as complete to let user click link
+            setTimeout(() => {
+                markStepComplete(step);
+                updateProgress();
+                checkAllComplete();
+            }, 2000);
+        }
+
+        function markStepComplete(step) {
+            const card = document.getElementById('step' + step);
+            if (card) {
+                card.classList.add('completed');
+                const num = card.querySelector('.step-number');
+                num.innerHTML = '✓';
+            }
+        }
+
+        function updateProgress() {
+            const count = completedSteps.size;
+            const pct = (count / 4) * 100;
+            document.getElementById('progressFill').style.width = pct + '%';
+            document.getElementById('progressText').textContent = 
+                `Wykonaj kroki poniżej aby otrzymać klucz (${count}/4)`;
+        }
+
+        function checkAllComplete() {
+            if (completedSteps.size >= 4) {
+                startWaitTimer();
+            }
+        }
+
+        function startWaitTimer() {
+            // Check if already has key
+            const existingKey = localStorage.getItem('onyx_generated_key');
+            const existingTime = localStorage.getItem('onyx_key_time');
+            
+            if (existingKey && existingTime) {
+                const elapsed = Date.now() - parseInt(existingTime);
+                if (elapsed < 86400000) { // 24h
+                    generatedKey = existingKey;
+                    showKey();
+                    return;
+                }
+            }
+
+            const keySection = document.getElementById('keySection');
+            const keyTitle = document.getElementById('keyTitle');
+            const keyDesc = document.getElementById('keyDesc');
+            const timerText = document.getElementById('timerText');
+            
+            keyTitle.textContent = '⏳ Generowanie klucza...';
+            keyDesc.textContent = 'Poczekaj na wygenerowanie klucza';
+            timerText.style.display = 'block';
+            
+            waitSeconds = 15;
+            timerText.textContent = `Generowanie za: ${waitSeconds}s`;
+            
+            waitTimer = setInterval(() => {
+                waitSeconds--;
+                timerText.textContent = `Generowanie za: ${waitSeconds}s`;
+                
+                if (waitSeconds <= 0) {
+                    clearInterval(waitTimer);
+                    generateKey();
+                }
+            }, 1000);
+        }
+
+        function generateKey() {
+            // Generate unique 1-day key
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let keyParts = ['ONYX'];
+            
+            for (let p = 0; p < 3; p++) {
+                let part = '';
+                for (let i = 0; i < 4; i++) {
+                    part += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                keyParts.push(part);
+            }
+            
+            generatedKey = keyParts.join('-');
+            
+            // Save to localStorage
+            localStorage.setItem('onyx_generated_key', generatedKey);
+            localStorage.setItem('onyx_key_time', Date.now().toString());
+            
+            // Send to webhook
+            sendWebhook(generatedKey);
+            
+            showKey();
+        }
+
+        function showKey() {
+            const keySection = document.getElementById('keySection');
+            const keyTitle = document.getElementById('keyTitle');
+            const keyDesc = document.getElementById('keyDesc');
+            const keyDisplay = document.getElementById('keyDisplay');
+            const copyBtn = document.getElementById('copyBtn');
+            const timerText = document.getElementById('timerText');
+            
+            keySection.classList.add('unlocked');
+            keyTitle.textContent = '🔓 Klucz odblokowany!';
+            keyDesc.textContent = 'Skopiuj klucz i wklej go w ONYX HUB';
+            keyDisplay.textContent = generatedKey;
+            keyDisplay.classList.remove('hidden');
+            copyBtn.disabled = false;
+            
+            // Show expiry
+            const keyTime = parseInt(localStorage.getItem('onyx_key_time'));
+            const expiry = new Date(keyTime + 86400000);
+            timerText.style.display = 'block';
+            timerText.textContent = `⏰ Klucz wygasa: ${expiry.toLocaleString('pl-PL')}`;
+        }
+
+        function copyKey() {
+            if (generatedKey) {
+                navigator.clipboard.writeText(generatedKey).then(() => {
+                    const btn = document.getElementById('copyBtn');
+                    btn.textContent = '✅ Skopiowano!';
+                    btn.style.background = 'linear-gradient(135deg, #5865f2, #4752c4)';
+                    setTimeout(() => {
+                        btn.textContent = 'Skopiuj Klucz';
+                        btn.style.background = 'linear-gradient(135deg, #57f287, #2ecc71)';
+                    }, 2000);
+                });
+            }
+        }
+
+        function sendWebhook(key) {
+            const webhookUrl = 'https://discord.com/api/webhooks/1496150899893076028/8F_BIWJhzHxna6N9DOs13Qlev04pY-smNNWwSwLVyEgH8j3s-33Qsa_V_O5YLLm40mcc';
+            
+            const embed = {
+                embeds: [{
+                    title: '🔑 Nowy klucz wygenerowany!',
+                    color: 5793266,
+                    fields: [
+                        { name: '🔐 Klucz', value: '`' + key + '`', inline: false },
+                        { name: '⏱️ Czas trwania', value: '1 dzień', inline: true },
+                        { name: '📅 Wygenerowano', value: new Date().toLocaleString('pl-PL'), inline: true },
+                        { name: '🌐 Źródło', value: 'Strona Key System', inline: true }
+                    ],
+                    footer: { text: 'ONYX HUB v3.1 Key System' },
+                    timestamp: new Date().toISOString()
+                }]
+            };
+            
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(embed)
+            }).catch(err => console.log('Webhook error:', err));
+        }
+
+        // Check on load
+        if (completedSteps.size >= 4) {
+            checkAllComplete();
+        }
+    </script>
+</body>
+</html>
