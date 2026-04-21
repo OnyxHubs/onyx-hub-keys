@@ -1,0 +1,54 @@
+{
+  "keys": [
+    {
+      "key": "ONYX-FREE-DAY-001",
+      "duration": "1day",
+      "used": false,
+      "usedBy": null,
+      "usedAt": null
+    },
+    {
+      "key": "ONYX-FREE-DAY-002",
+      "duration": "1day",
+      "used": false,
+      "usedBy": null,
+      "usedAt": null
+    },
+    {
+      "key": "ONYX-FREE-DAY-003",
+      "duration": "1day",
+      "used": false,
+      "usedBy": null,
+      "usedAt": null
+    },
+    {
+      "key": "ONYX-WEEK-001",
+      "duration": "7days",
+      "used": false,
+      "usedBy": null,
+      "usedAt": null
+    },
+    {
+      "key": "ONYX-WEEK-002",
+      "duration": "7days",
+      "used": false,
+      "usedBy": null,
+      "usedAt": null
+    },
+    {
+      "key": "ONYX-MONTH-001",
+      "duration": "30days",
+      "used": false,
+      "usedBy": null,
+      "usedAt": null
+    },
+    {
+      "key": "ONYX-LIFE-001",
+      "duration": "lifetime",
+      "used": false,
+      "usedBy": null,
+      "usedAt": null
+    }
+  ],
+  "verified_users": []
+}
